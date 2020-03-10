@@ -5,10 +5,15 @@ import scrapy
 class PatchCategorySpider(scrapy.Spider):
     name = "patch_category"
     start_urls = [
-        "https://www.pathofexile.com/forum/view-thread/2753887"
+        "https://www.pathofexile.com/search/results/Content+Update/search-within/threads/forums/366/page/1"
     ]
 
     def parse(self, response):
+        author_page_links = response.css('td.content div.content a')
+        yield from response.follow_all(author_page_links, self.parse_patch_notes)
+
+
+    def parse_patch_notes(self, response):
         #last 3 are report/additional info so we exclude
 
         content = response.css("div.content")[0]
