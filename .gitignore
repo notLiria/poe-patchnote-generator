@@ -1,3 +1,10 @@
+# gpt-2 stuff
+checkpoint/
+models/
+
+#vscode stuff
+.vscode/
+
 # Test output from scrapy
 *.json
 
