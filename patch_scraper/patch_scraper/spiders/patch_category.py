@@ -12,6 +12,9 @@ class PatchCategorySpider(scrapy.Spider):
         author_page_links = response.css('td.content div.content a')
         yield from response.follow_all(author_page_links, self.parse_patch_notes)
 
+        pagination_links = response.css('div.pagination a')
+        yield from response.follow_all(pagination_links, self.parse)
+
 
     def parse_patch_notes(self, response):
         #last 3 are report/additional info so we exclude
@@ -26,4 +29,5 @@ class PatchCategorySpider(scrapy.Spider):
 
         for change in content.css('li::text'):
             out['changes'].append(change.get())
-        yield out 
+        yield out
+
